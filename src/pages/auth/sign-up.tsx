@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { signUp } from '@/api/register'
+import { signUp } from '@/api/register-restaurant'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
