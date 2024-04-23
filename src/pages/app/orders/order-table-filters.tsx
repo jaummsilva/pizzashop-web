@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SelectTrigger } from '@radix-ui/react-select'
 import { Search } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 import { useSearchParams } from 'react-router-dom'
@@ -11,6 +10,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
 
@@ -65,6 +65,7 @@ export function OrderTableFilters() {
       return state
     })
   }
+
   function handleFilterReset() {
     setSearchParams((state) => {
       state.delete('orderId')
