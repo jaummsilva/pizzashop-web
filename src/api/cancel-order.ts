@@ -1,10 +1,10 @@
 import { api } from '@/lib/axios'
 
-export interface GetOrderDetailsParams {
+export interface GetOrderCancelParams {
   orderId: string
 }
 
-export async function cancelOrder({ orderId }: GetOrderDetailsParams) {
+export async function cancelOrder({ orderId }: GetOrderCancelParams) {
   const response = await api.patch(`/orders/${orderId}/cancel`)
 
   return response.data
