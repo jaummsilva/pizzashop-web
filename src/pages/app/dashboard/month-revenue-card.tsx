@@ -1,8 +1,17 @@
+import { useQuery } from '@tanstack/react-query'
 import { DollarSign } from 'lucide-react'
 
+import {
+  getMonthReceipt,
+  GetMonthReceiptResponse,
+} from '@/api/get-month-receipt'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export function MonthRevenueCard() {
+  const { data: result } = useQuery<GetMonthReceiptResponse>({
+    queryKey: ['monthOrdersRevenue'],
+    queryFn: () => getMonthReceipt(),
+  })
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
@@ -12,10 +21,32 @@ export function MonthRevenueCard() {
         <DollarSign className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">R$ 1248,90</span>
+        <span className="text-2xl font-bold tracking-tight">
+          {result?.receipt !== undefined
+            ? (result?.receipt / 100).toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              })
+            : 'Valor não disponível'}
+        </span>
+
         <p className="text-xs text-muted-foreground">
-          <span className="text-emerald-500 dark:text-emerald-400">+2%</span> em
-          relação ao mês passado
+          {result?.diffFromLastMonth && result.diffFromLastMonth > 0 && (
+            <span className="dark:text--400 text-emerald-500">
+              {result.diffFromLastMonth}%
+            </span>
+          )}
+          {result?.diffFromLastMonth && result.diffFromLastMonth === 0 && (
+            <span className="dark:text--400 text-gray-400-500">
+              {result.diffFromLastMonth}%
+            </span>
+          )}
+          {result?.diffFromLastMonth && result.diffFromLastMonth < 0 && (
+            <span className="dark:text--400 text-rose-500">
+              {result.diffFromLastMonth}%
+            </span>
+          )}{' '}
+          em relação ao mês passado
         </p>
       </CardContent>
     </Card>
