@@ -7,6 +7,8 @@ import {
 } from '@/api/get-month-receipt'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
+import { MetricCardSkeleton } from './metric-card-skeleton'
+
 export function MonthRevenueCard() {
   const { data: result } = useQuery<GetMonthReceiptResponse>({
     queryKey: ['monthOrdersRevenue'],
@@ -21,33 +23,42 @@ export function MonthRevenueCard() {
         <DollarSign className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">
-          {result?.receipt !== undefined
-            ? (result?.receipt / 100).toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })
-            : 'Valor não disponível'}
-        </span>
+        {result ? (
+          <>
+            <span className="text-2xl font-bold tracking-tight">
+              {result?.receipt !== undefined
+                ? (result?.receipt / 100).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })
+                : 'Valor não disponível'}
+            </span>
 
-        <p className="text-xs text-muted-foreground">
-          {result?.diffFromLastMonth && result.diffFromLastMonth > 0 && (
-            <span className="dark:text--400 text-emerald-500">
-              {result.diffFromLastMonth}%
-            </span>
-          )}
-          {result?.diffFromLastMonth && result.diffFromLastMonth === 0 && (
-            <span className="dark:text--400 text-gray-400-500">
-              {result.diffFromLastMonth}%
-            </span>
-          )}
-          {result?.diffFromLastMonth && result.diffFromLastMonth < 0 && (
-            <span className="dark:text--400 text-rose-500">
-              {result.diffFromLastMonth}%
-            </span>
-          )}{' '}
-          em relação ao mês passado
-        </p>
+            <p className="text-xs text-muted-foreground">
+              {result.diffFromLastMonth !== undefined &&
+                result.diffFromLastMonth > 0 && (
+                  <span className="dark:text--400 text-emerald-500">
+                    {result.diffFromLastMonth}%
+                  </span>
+                )}
+              {result.diffFromLastMonth !== undefined &&
+                result.diffFromLastMonth === 0 && (
+                  <span className="dark:text--400 text-gray-400-500">
+                    {result.diffFromLastMonth}%
+                  </span>
+                )}
+              {result.diffFromLastMonth !== undefined &&
+                result.diffFromLastMonth < 0 && (
+                  <span className="dark:text--400 text-rose-500">
+                    {result.diffFromLastMonth}%
+                  </span>
+                )}{' '}
+              em relação ao mês passado
+            </p>
+          </>
+        ) : (
+          <MetricCardSkeleton />
+        )}
       </CardContent>
     </Card>
   )

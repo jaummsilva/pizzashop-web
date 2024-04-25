@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -18,6 +17,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+
+import { OrderTableDetailsSkeleton } from './order-table-details-skeleton'
 
 export interface OrderDetailsProps {
   orderId: string
@@ -37,7 +38,7 @@ export function OrderDetails({ orderId, open }: OrderDetailsProps) {
   return (
     <DialogContent>
       {isLoadingOrderDetails ? (
-        <Skeleton className="h-4 w-40" />
+        <OrderTableDetailsSkeleton />
       ) : (
         <>
           <DialogHeader>

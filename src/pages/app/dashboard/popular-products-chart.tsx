@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { BarChart } from 'lucide-react'
+import { BarChart, Loader2 } from 'lucide-react'
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts'
 import colors from 'tailwindcss/colors'
 
@@ -8,7 +8,6 @@ import {
   GetPopularProdutcsResponse,
 } from '@/api/get-popular-products'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 
 export function PopularProductsChart() {
   const { data: result, isLoading: isLoadingPopularProducts } =
@@ -36,7 +35,9 @@ export function PopularProductsChart() {
       </CardHeader>
       <CardContent>
         {isLoadingPopularProducts ? (
-          <Skeleton style={{ width: '100%', height: 240 }} />
+          <div className="flex h-[240px] w-full items-center justify-center">
+            <Loader2 className="h-20 w-20 animate-spin text-muted-foreground" />
+          </div>
         ) : (
           result && (
             <ResponsiveContainer width="100%" height={240}>

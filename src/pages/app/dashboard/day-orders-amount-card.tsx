@@ -7,6 +7,8 @@ import {
 } from '@/api/get-day-orders-amount'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
+import { MetricCardSkeleton } from './metric-card-skeleton'
+
 export function DayOrdersAmountCard() {
   const { data: result } = useQuery<GetDayOrdersAmountResponse>({
     queryKey: ['dayOrdersAmount'],
@@ -20,26 +22,32 @@ export function DayOrdersAmountCard() {
         <Utensils className="h-4 w-4 text-muted-foreground" />
       </CardHeader>
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">
-          {result?.amount}
-        </span>
-        <p className="text-xs text-muted-foreground">
-          {result?.diffFromYesterday !== null &&
-            result?.diffFromYesterday !== undefined && (
-              <span
-                className={`dark:text--400 ${
-                  result.diffFromYesterday > 0
-                    ? 'text-emerald-500'
-                    : result.diffFromYesterday === 0
-                      ? 'text-white-500'
-                      : 'text-rose-500'
-                }`}
-              >
-                {result.diffFromYesterday}%
-              </span>
-            )}{' '}
-          em relação a ontem
-        </p>
+        {result ? (
+          <div>
+            <span className="text-2xl font-bold tracking-tight">
+              {result?.amount}
+            </span>
+            <p className="text-xs text-muted-foreground">
+              {result?.diffFromYesterday !== null &&
+                result?.diffFromYesterday !== undefined && (
+                  <span
+                    className={`dark:text--400 ${
+                      result.diffFromYesterday > 0
+                        ? 'text-emerald-500'
+                        : result.diffFromYesterday === 0
+                          ? 'text-white-500'
+                          : 'text-rose-500'
+                    }`}
+                  >
+                    {result.diffFromYesterday}%
+                  </span>
+                )}{' '}
+              em relação a ontem
+            </p>
+          </div>
+        ) : (
+          <MetricCardSkeleton />
+        )}
       </CardContent>
     </Card>
   )

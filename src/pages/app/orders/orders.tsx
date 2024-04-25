@@ -6,7 +6,6 @@ import { z } from 'zod'
 import { getOrders } from '@/api/get-orders'
 import { Pagination } from '@/components/pagination'
 import { Separator } from '@/components/ui/separator'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ import {
 
 import { OrderTableFilters } from './order-table-filters'
 import { OrderTableRow } from './order-table-row'
+import { OrderTableSkeleton } from './order-table-skeleton'
 
 export interface OrderTableRowProps {
   order: {
@@ -86,7 +86,7 @@ export function Orders() {
             </TableHeader>
             <TableBody style={{ height: '100%' }}>
               {isLoadingOrdersRestaurant ? (
-                <Skeleton style={{ width: '100%', height: '100%' }} />
+                <OrderTableSkeleton />
               ) : (
                 result &&
                 result.orders.map((order) => (
