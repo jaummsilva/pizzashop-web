@@ -24,21 +24,20 @@ export function DayOrdersAmountCard() {
           {result?.amount}
         </span>
         <p className="text-xs text-muted-foreground">
-          {result?.diffFromYesterday && result.diffFromYesterday > 0 && (
-            <span className="dark:text--400 text-emerald-500">
-              {result.diffFromYesterday}%
-            </span>
-          )}
-          {result?.diffFromYesterday && result.diffFromYesterday === 0 && (
-            <span className="dark:text--400 text-white-500">
-              {result.diffFromYesterday}%
-            </span>
-          )}
-          {result?.diffFromYesterday && result.diffFromYesterday < 0 && (
-            <span className="dark:text--400 text-rose-500">
-              {result.diffFromYesterday}%
-            </span>
-          )}{' '}
+          {result?.diffFromYesterday !== null &&
+            result?.diffFromYesterday !== undefined && (
+              <span
+                className={`dark:text--400 ${
+                  result.diffFromYesterday > 0
+                    ? 'text-emerald-500'
+                    : result.diffFromYesterday === 0
+                      ? 'text-white-500'
+                      : 'text-rose-500'
+                }`}
+              >
+                {result.diffFromYesterday}%
+              </span>
+            )}{' '}
           em relação a ontem
         </p>
       </CardContent>

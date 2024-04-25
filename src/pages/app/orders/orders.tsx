@@ -84,9 +84,9 @@ export function Orders() {
                 <TableHead className="w-[132px]"></TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody style={{ height: '100%' }}>
               {isLoadingOrdersRestaurant ? (
-                <Skeleton />
+                <Skeleton style={{ width: '100%', height: '100%' }} />
               ) : (
                 result &&
                 result.orders.map((order) => (

@@ -137,7 +137,6 @@ export function OrderTableFilters() {
         type="button"
         variant="outline"
         size="xs"
-        className="ms-4"
         onClick={handleFilterReset}
       >
         <Search className="mr-2 h-4 w-4" />
